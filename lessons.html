@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lessons — Pension Awareness Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+<div class="app-layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">NP</div>
+      <div>
+        <div class="logo-text">NPS Platform</div>
+        <div class="logo-sub">Pension Awareness</div>
+      </div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">⊞</span> Dashboard</a>
+      <a href="simulator.html" class="nav-item"><span class="nav-icon">⌛</span> Simulator</a>
+      <a href="lessons.html" class="nav-item active"><span class="nav-icon">📖</span> Lessons</a>
+      <a href="intent.html" class="nav-item"><span class="nav-icon">🎯</span> Saving Intent</a>
+      <div class="nav-section-label mt-4">Account</div>
+      <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span> Profile</a>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <header class="page-header">
+      <div class="page-header-title">Lessons</div>
+    </header>
+
+    <div class="page-content">
+      <!-- Two-panel layout: list + detail -->
+      <div style="display: grid; grid-template-columns: 340px 1fr; gap: 24px; align-items: start;">
+
+        <!-- Lesson list -->
+        <div>
+          <div class="section-header mb-3">
+            <div>
+              <div class="section-title">NPS Modules</div>
+              <div class="section-desc">
+                <span id="completed-count">0</span> of <span id="total-count">0</span> completed
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="progress-bar-container mb-4">
+            <div class="progress-bar-fill" id="progress-bar" style="width: 0%"></div>
+          </div>
+
+          <!-- Loading state -->
+          <div class="loading-overlay" id="lessons-loading">
+            <div class="loading-spinner"></div>
+            <span>Loading lessons…</span>
+          </div>
+
+          <!-- Lesson list -->
+          <div class="lesson-list" id="lesson-list"></div>
+
+          <!-- Empty state shown if Firestore has no lessons -->
+          <div id="lessons-empty" class="empty-state hidden">
+            <p>No lessons found. Please add lessons to Firestore via the Admin console.</p>
+            <p class="mt-2"><a href="admin.html">Go to Admin →</a></p>
+          </div>
+        </div>
+
+        <!-- Lesson detail -->
+        <div id="lesson-detail">
+          <div class="card" style="text-align: center; padding: 48px 24px;">
+            <div style="font-size: 40px; margin-bottom: 12px;">📖</div>
+            <p class="text-muted text-sm">Select a lesson from the left to start reading.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script type="module" src="js/lessons.js"></script>
+
+</body>
+</html>

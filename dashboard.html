@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Pension Awareness Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+<div class="app-layout">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">NP</div>
+      <div>
+        <div class="logo-text">NPS Platform</div>
+        <div class="logo-sub">Pension Awareness</div>
+      </div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-item active">
+        <span class="nav-icon">⊞</span> Dashboard
+      </a>
+      <a href="simulator.html" class="nav-item">
+        <span class="nav-icon">⌛</span> Simulator
+      </a>
+      <a href="lessons.html" class="nav-item">
+        <span class="nav-icon">📖</span> Lessons
+      </a>
+      <a href="intent.html" class="nav-item">
+        <span class="nav-icon">🎯</span> Saving Intent
+      </a>
+
+      <div class="nav-section-label mt-4">Account</div>
+      <a href="profile.html" class="nav-item">
+        <span class="nav-icon">👤</span> Profile
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header class="page-header">
+      <div class="page-header-title">Dashboard</div>
+    </header>
+
+    <div class="page-content">
+      <!-- Welcome bar -->
+      <div style="margin-bottom: 24px;">
+        <h2 style="font-size: 1.375rem; font-weight: 600;" id="welcome-msg">Welcome back</h2>
+        <p class="text-muted text-sm mt-1">Here's your activity summary.</p>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Points</div>
+          <div class="stat-value" id="stat-points">—</div>
+          <div class="stat-meta">Earned from lessons & quizzes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Badges Earned</div>
+          <div class="stat-value" id="stat-badges">—</div>
+          <div class="stat-meta">Achievements unlocked</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Lessons Done</div>
+          <div class="stat-value" id="stat-lessons">—</div>
+          <div class="stat-meta">Out of total available</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Current Streak</div>
+          <div class="stat-value" id="stat-streak">—</div>
+          <div class="stat-meta">Days active in a row</div>
+        </div>
+      </div>
+
+      <!-- Quick action cards -->
+      <div class="section-header">
+        <div>
+          <div class="section-title">Quick Actions</div>
+          <div class="section-desc">Jump to the tools you use most</div>
+        </div>
+      </div>
+
+      <div class="action-cards">
+        <a href="simulator.html" class="action-card">
+          <div class="action-card-icon">⌛</div>
+          <div class="action-card-title">Pension Simulator</div>
+          <div class="action-card-desc">Calculate your expected retirement corpus based on your contributions and age.</div>
+          <div class="action-card-arrow">→</div>
+        </a>
+        <a href="lessons.html" class="action-card">
+          <div class="action-card-icon">📖</div>
+          <div class="action-card-title">Continue Learning</div>
+          <div class="action-card-desc">Resume NPS lessons, earn points, and unlock badges as you complete modules.</div>
+          <div class="action-card-arrow">→</div>
+        </a>
+        <a href="intent.html" class="action-card">
+          <div class="action-card-icon">🎯</div>
+          <div class="action-card-title">Set Saving Intent</div>
+          <div class="action-card-desc">Declare your monthly saving target and track your NPS contribution intent.</div>
+          <div class="action-card-arrow">→</div>
+        </a>
+      </div>
+
+      <!-- Recent activity placeholder -->
+      <div class="section-header mt-6">
+        <div>
+          <div class="section-title">Recent Activity</div>
+        </div>
+      </div>
+
+      <div class="card" id="recent-activity">
+        <div class="loading-overlay" id="activity-loading">
+          <div class="loading-spinner"></div>
+          <span>Loading…</span>
+        </div>
+        <div id="activity-list" class="hidden"></div>
+        <div id="activity-empty" class="empty-state hidden">
+          <p>No activity yet. Complete a lesson or run a simulation to get started.</p>
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </div><!-- /main-content -->
+</div><!-- /app-layout -->
+
+<div id="toast-container"></div>
+
+<script type="module" src="js/dashboard.js"></script>
+
+</body>
+</html>

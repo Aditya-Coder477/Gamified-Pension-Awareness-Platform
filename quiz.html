@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz — Pension Awareness Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+<div class="app-layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">NP</div>
+      <div>
+        <div class="logo-text">NPS Platform</div>
+        <div class="logo-sub">Pension Awareness</div>
+      </div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">⊞</span> Dashboard</a>
+      <a href="simulator.html" class="nav-item"><span class="nav-icon">⌛</span> Simulator</a>
+      <a href="lessons.html" class="nav-item active"><span class="nav-icon">📖</span> Lessons</a>
+      <a href="intent.html" class="nav-item"><span class="nav-icon">🎯</span> Saving Intent</a>
+      <div class="nav-section-label mt-4">Account</div>
+      <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span> Profile</a>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <header class="page-header">
+      <div class="page-header-title" id="quiz-header-title">Lesson Quiz</div>
+      <div class="page-header-right">
+        <a href="lessons.html" class="btn btn-ghost btn-sm">← Back to Lessons</a>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div style="max-width: 680px; margin: 0 auto;">
+
+        <!-- Loading -->
+        <div class="loading-overlay" id="quiz-loading">
+          <div class="loading-spinner"></div>
+          <span>Loading quiz…</span>
+        </div>
+
+        <!-- No quiz available -->
+        <div id="quiz-none" class="hidden card" style="text-align:center; padding: 48px;">
+          <div style="font-size: 32px; margin-bottom: 12px;">✅</div>
+          <p class="text-muted">No quiz is available for this lesson yet.</p>
+          <a href="lessons.html" class="btn btn-outline mt-4">Back to Lessons</a>
+        </div>
+
+        <!-- Quiz in progress -->
+        <div id="quiz-container" class="hidden">
+          <div class="mb-4">
+            <p class="text-muted text-sm" id="quiz-lesson-name"></p>
+            <div class="section-title mt-1">Knowledge Check</div>
+            <p class="text-sm text-muted mt-1">Answer all questions, then submit to see your score.</p>
+          </div>
+
+          <div id="quiz-questions"></div>
+
+          <button class="btn btn-primary btn-lg" id="submit-quiz-btn" onclick="submitQuiz()">
+            Submit Answers
+          </button>
+        </div>
+
+        <!-- Quiz result -->
+        <div id="quiz-result" class="hidden quiz-score-card">
+          <p class="text-muted text-sm">Quiz complete</p>
+          <div class="quiz-score-number" id="quiz-score">0/0</div>
+          <p id="quiz-result-msg" style="font-size: var(--font-size-base); margin-bottom: 16px;"></p>
+          <div id="quiz-points-msg" class="alert alert-success mb-4 hidden"></div>
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <a href="lessons.html" class="btn btn-outline">Back to Lessons</a>
+            <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script type="module" src="js/quiz.js"></script>
+
+</body>
+</html>

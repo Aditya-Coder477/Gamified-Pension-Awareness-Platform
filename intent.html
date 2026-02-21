@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saving Intent — Pension Awareness Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+<div class="app-layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">NP</div>
+      <div>
+        <div class="logo-text">NPS Platform</div>
+        <div class="logo-sub">Pension Awareness</div>
+      </div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">⊞</span> Dashboard</a>
+      <a href="simulator.html" class="nav-item"><span class="nav-icon">⌛</span> Simulator</a>
+      <a href="lessons.html" class="nav-item"><span class="nav-icon">📖</span> Lessons</a>
+      <a href="intent.html" class="nav-item active"><span class="nav-icon">🎯</span> Saving Intent</a>
+      <div class="nav-section-label mt-4">Account</div>
+      <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span> Profile</a>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <header class="page-header">
+      <div class="page-header-title">Saving Intent</div>
+    </header>
+
+    <div class="page-content">
+      <div class="intent-form-container">
+        <div class="section-header mb-4">
+          <div>
+            <div class="section-title">Set Your NPS Saving Intent</div>
+            <div class="section-desc">Declare how much you plan to contribute regularly. This helps you stay accountable.</div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="card card-lg" id="intent-form-card">
+          <form id="intent-form" novalidate>
+            <div class="form-group">
+              <label for="intent-amount">Planned Contribution Amount (₹)</label>
+              <input type="number" id="intent-amount" class="form-control" placeholder="e.g. 5000" min="500" step="100" required />
+              <div class="form-hint">This is the amount you intend to contribute per frequency.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="intent-frequency">Contribution Frequency</label>
+              <select id="intent-frequency" class="form-control" required>
+                <option value="">Select frequency</option>
+                <option value="monthly">Monthly</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="yearly">Yearly</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="intent-start-date">Target Start Date</label>
+              <input type="date" id="intent-start-date" class="form-control" />
+              <div class="form-hint">When do you plan to start contributing?</div>
+            </div>
+
+            <div class="form-group">
+              <label for="intent-note">Notes (optional)</label>
+              <textarea id="intent-note" class="form-control" rows="3" placeholder="e.g. Linked to salary credit on 1st of every month…" style="resize: vertical;"></textarea>
+            </div>
+
+            <div id="intent-error" class="alert alert-danger mb-3 hidden"></div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="intent-submit-btn">
+              Save Intent
+            </button>
+          </form>
+        </div>
+
+        <!-- Success state -->
+        <div id="intent-success" class="intent-submitted hidden">
+          <div class="check-icon">✅</div>
+          <h3 style="font-size: var(--font-size-xl); margin-bottom: 8px;">Intent Saved</h3>
+          <p class="text-muted text-sm mb-4">Your saving intent has been recorded. Keep to your plan!</p>
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn btn-outline" onclick="showFormAgain()">Update Intent</button>
+            <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+          </div>
+        </div>
+
+        <!-- Previous intents -->
+        <div class="mt-6">
+          <div class="section-title mb-3">Your Previous Intents</div>
+          <div id="intents-loading" class="loading-overlay"><div class="loading-spinner"></div></div>
+          <div id="intents-list"></div>
+          <div id="intents-empty" class="empty-state hidden">
+            <p>No previous intents found.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script type="module" src="js/intent.js"></script>
+
+<script>
+function showFormAgain() {
+  document.getElementById('intent-success').classList.add('hidden');
+  document.getElementById('intent-form-card').classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>

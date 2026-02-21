@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pension Simulator — Pension Awareness Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+<div class="app-layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">NP</div>
+      <div>
+        <div class="logo-text">NPS Platform</div>
+        <div class="logo-sub">Pension Awareness</div>
+      </div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">⊞</span> Dashboard</a>
+      <a href="simulator.html" class="nav-item active"><span class="nav-icon">⌛</span> Simulator</a>
+      <a href="lessons.html" class="nav-item"><span class="nav-icon">📖</span> Lessons</a>
+      <a href="intent.html" class="nav-item"><span class="nav-icon">🎯</span> Saving Intent</a>
+      <div class="nav-section-label mt-4">Account</div>
+      <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span> Profile</a>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <header class="page-header">
+      <div class="page-header-title">Pension Simulator</div>
+    </header>
+
+    <div class="page-content">
+      <p class="text-muted text-sm mb-6">
+        Estimate your NPS retirement corpus based on your contribution plan. Results are indicative and not guaranteed.
+      </p>
+
+      <div class="simulator-layout">
+        <!-- Inputs Panel -->
+        <div class="simulator-inputs">
+          <h2>Your Details</h2>
+
+          <div class="form-group">
+            <label for="current-age">Current Age</label>
+            <input type="number" id="current-age" class="form-control" value="28" min="18" max="65" />
+            <div class="form-hint">Your age today</div>
+          </div>
+
+          <div class="form-group">
+            <label for="retirement-age">Retirement Age</label>
+            <input type="number" id="retirement-age" class="form-control" value="60" min="40" max="75" />
+            <div class="form-hint">NPS default is 60 years</div>
+          </div>
+
+          <div class="form-group">
+            <label for="monthly-contribution">Monthly Contribution (₹)</label>
+            <input type="number" id="monthly-contribution" class="form-control" value="5000" min="500" step="500" />
+            <div class="form-hint">Minimum ₹500/month recommended</div>
+          </div>
+
+          <div class="form-group">
+            <label for="annual-return">Expected Annual Return (%)</label>
+            <input type="number" id="annual-return" class="form-control" value="10" min="5" max="15" step="0.5" />
+            <div class="form-hint">Equity: ~12%, Mixed: ~10%, Conservative: ~7%</div>
+          </div>
+
+          <button class="btn btn-primary btn-block btn-lg" id="calculate-btn" onclick="runSimulation()">
+            Calculate Corpus →
+          </button>
+
+          <div id="save-result-wrap" class="hidden mt-3">
+            <button class="btn btn-outline btn-block" id="save-sim-btn">Save Simulation to Profile</button>
+          </div>
+        </div>
+
+        <!-- Result Panel -->
+        <div class="simulator-result" id="result-panel">
+          <div id="result-empty" class="empty-state">
+            <div style="font-size: 40px; margin-bottom: 8px;">⌛</div>
+            <p>Fill in your details and click <strong>Calculate Corpus</strong> to see your projection.</p>
+          </div>
+
+          <div id="result-content" class="hidden">
+            <div class="corpus-display">
+              <div class="corpus-label">Estimated Retirement Corpus</div>
+              <div class="corpus-value" id="corpus-value">₹0</div>
+              <div class="corpus-sub" id="corpus-sub"></div>
+            </div>
+
+            <div class="grid-2 mb-4">
+              <div class="card card-sm">
+                <div class="stat-label">Total Invested</div>
+                <div class="stat-value text-sm" id="total-invested" style="font-size: 1.25rem;">₹0</div>
+              </div>
+              <div class="card card-sm">
+                <div class="stat-label">Estimated Growth</div>
+                <div class="stat-value text-sm" id="total-growth" style="font-size: 1.25rem;">₹0</div>
+              </div>
+              <div class="card card-sm">
+                <div class="stat-label">Investment Period</div>
+                <div class="stat-value text-sm" id="invest-years" style="font-size: 1.25rem;">0 yrs</div>
+              </div>
+              <div class="card card-sm">
+                <div class="stat-label">Monthly Annuity Est.*</div>
+                <div class="stat-value text-sm" id="annuity-est" style="font-size: 1.25rem;">₹0</div>
+                <div class="stat-meta">*40% corpus @ 6% annuity rate</div>
+              </div>
+            </div>
+
+            <!-- Yearly breakdown table -->
+            <div class="section-title mb-3">Year-by-Year Projection</div>
+            <div class="table-container">
+              <table id="breakdown-table">
+                <thead>
+                  <tr>
+                    <th>Year</th>
+                    <th>Age</th>
+                    <th>Yearly Contribution</th>
+                    <th>Cumulative Corpus</th>
+                  </tr>
+                </thead>
+                <tbody id="breakdown-body">
+                </tbody>
+              </table>
+            </div>
+
+            <p class="text-muted text-sm mt-4">
+              * Projections assume constant monthly contribution and fixed annual return.
+              Actual returns may vary based on fund allocation and market conditions.
+              This is for educational purposes only.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script type="module" src="js/simulator.js"></script>
+
+</body>
+</html>

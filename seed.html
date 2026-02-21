@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Seeding Lessons…</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: Inter, sans-serif; display: flex; align-items: center; justify-content: center;
+           min-height: 100vh; margin: 0; background: #f5f5f5; }
+    .box { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px;
+           padding: 40px 48px; max-width: 520px; text-align: center; }
+    h2 { margin: 0 0 8px; font-size: 1.25rem; }
+    p  { color: #666; font-size: 0.9rem; margin: 0 0 24px; }
+    #status { font-size: 0.875rem; margin-top: 16px; min-height: 20px; }
+    .ok  { color: #16a34a; }
+    .err { color: #dc2626; }
+    a   { color: #2563eb; }
+    .spinner { display: inline-block; width: 18px; height: 18px;
+               border: 2px solid #ddd; border-top-color: #555;
+               border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+<div class="box">
+  <h2>Seeding Sample Lessons</h2>
+  <p>This page seeds 5 NPS lessons and 5 quizzes into Firestore.<br>Keep it open until done.</p>
+  <div id="status"><span class="spinner"></span> Connecting to Firestore…</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, setDoc, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+// ── Firebase config (same as js/firebase.js) ─────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyBpFnDDkVEkH4XFEO-QXn0LM3EIJ7a8Gec",
+  authDomain: "pensionapp-77a49.firebaseapp.com",
+  projectId: "pensionapp-77a49",
+  storageBucket: "pensionapp-77a49.firebasestorage.app",
+  messagingSenderId: "966793247403",
+  appId: "1:966793247403:web:6706282aa6a65cbc0d0c5d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+const statusEl = document.getElementById('status');
+
+// ── Lesson data ──────────────────────────────────────────────
+const LESSONS = [
+  {
+    id: 'lesson_001', order: 1, title: 'What is NPS?',
+    duration: '5 min', points: 10,
+    content: `The National Pension System (NPS) is a government-backed voluntary retirement savings scheme launched in 2004 for Central Government employees, and opened to all Indian citizens in 2009.
+
+It is regulated by the Pension Fund Regulatory and Development Authority (PFRDA), which ensures the safety and soundness of pension fund management.
+
+Under NPS, subscribers accumulate savings in a personal retirement account (PRAN — Permanent Retirement Account Number) during their working life. On retirement, a portion of the corpus is used to buy an annuity — a regular monthly income — while the rest can be withdrawn as a lump sum.
+
+Key benefits of NPS:
+- Tax deductions under Section 80C and 80CCD(1B) up to ₹2 lakh per year
+- Low-cost fund management
+- Flexibility to choose your fund manager and investment mix
+- Portable across employers and locations
+- Government-regulated and secure`
+  },
+  {
+    id: 'lesson_002', order: 2, title: 'Tier I vs Tier II Accounts',
+    duration: '6 min', points: 10,
+    content: `NPS offers two types of accounts: Tier I and Tier II.
+
+Tier I Account (Pension Account):
+This is the primary NPS account. It is mandatory for government employees and voluntary for others.
+- Minimum annual contribution: ₹1,000
+- Premature withdrawal is highly restricted
+- Additional ₹50,000 tax deduction under Section 80CCD(1B)
+- Corpus locked till retirement (age 60)
+
+Tier II Account (Investment Account):
+A voluntary savings account linked to Tier I.
+- Can be opened only if Tier I is active
+- No lock-in; withdrawals freely allowed any time
+- No tax benefits for private sector employees
+- Minimum initial contribution: ₹250
+
+Summary: Use Tier I for long-term retirement savings and tax benefits. Use Tier II for flexible, liquid surplus investment.`
+  },
+  {
+    id: 'lesson_003', order: 3, title: 'Tax Benefits Under NPS',
+    duration: '7 min', points: 10,
+    content: `NPS offers substantial tax advantages, making it one of the most tax-efficient retirement tools available.
+
+Section 80CCD(1) — Employee Contribution:
+Up to 10% of salary (Basic + DA) is deductible. Counted within the overall ₹1.5 lakh limit of Section 80C.
+
+Section 80CCD(1B) — Additional Deduction:
+An exclusive additional deduction of up to ₹50,000 per year over and above the 80C limit. Available only for NPS.
+
+Section 80CCD(2) — Employer Contribution:
+If your employer contributes to NPS, up to 10% of salary (14% for govt employees) is deductible — does not count toward the ₹1.5 lakh or ₹50,000 caps.
+
+At Maturity:
+- 60% of the corpus can be withdrawn tax-free at age 60
+- 40% must be used to purchase an annuity (taxable when received)
+
+Tax tip: A person in the 30% bracket can save ₹15,600+ annually using just the extra ₹50,000 80CCD(1B) deduction.`
+  },
+  {
+    id: 'lesson_004', order: 4, title: 'How to Invest in NPS',
+    duration: '8 min', points: 10,
+    content: `Opening an NPS account is straightforward.
+
+Step 1: Choose your registration method
+- Online via eNPS portal (enps.nsdl.com) using Aadhaar or PAN
+- Through your bank (if it's a registered Point of Presence)
+- Employer-facilitated NPS for corporate employees
+
+Step 2: Get your PRAN
+A Permanent Retirement Account Number (PRAN) is your unique NPS identifier, issued upon registration.
+
+Step 3: Choose your investment allocation
+NPS lets you invest in four asset classes:
+- E — Equity: Market-linked, higher potential return
+- G — Government Bonds: Low risk, stable returns
+- C — Corporate Bonds: Moderate risk
+- A — Alternative Investment Funds
+
+Step 4: Select a Pension Fund Manager (PFM)
+Approved PFMs include SBI Pension Funds, HDFC Pension Fund, Kotak Pension Fund, ICICI Pru Pension, and others. Compare performance on the PFRDA website.
+
+Step 5: Make regular contributions
+Set up a standing instruction for monthly auto-debit. Even ₹2,000/month at 10% p.a. over 30 years can grow to approximately ₹45 lakh.`
+  },
+  {
+    id: 'lesson_005', order: 5, title: 'Withdrawal Rules & Exit Options',
+    duration: '8 min', points: 10,
+    content: `Understanding NPS withdrawal rules is key for retirement planning.
+
+Normal Exit (At Age 60 or Above):
+- At least 40% of corpus must be used to buy an annuity
+- Up to 60% can be withdrawn as a tax-free lump sum
+- If corpus ≤ ₹5 lakh, full withdrawal is permitted
+
+Premature Exit (Before Age 60):
+- Allowed only after 3 years of subscription
+- At least 80% of corpus must go toward an annuity
+- Only 20% can be withdrawn as lump sum
+- If corpus ≤ ₹2.5 lakh, full withdrawal is permitted
+
+Partial Withdrawal (After 3 Years):
+- Allowed for: higher education, marriage, home purchase, critical illness
+- Maximum 25% of subscriber's own contributions
+- Allowed a maximum of 3 times during the entire tenure
+
+Death of Subscriber:
+The entire corpus is paid to the nominee, who may also opt to buy an annuity.
+
+Annuity Options:
+PFRDA-empanelled Annuity Service Providers (ASPs) offer various payout structures — single life, joint life, increasing annuity, return of purchase price, and more.`
+  }
+];
+
+// ── Quiz data ─────────────────────────────────────────────────
+const QUIZZES = [
+  { id: 'quiz_001', lessonId: 'lesson_001', questions: [
+    { q: 'What does NPS stand for?', options: ['National Pension System','New Payment Scheme','National Provident Savings','None of these'], answer: 0 },
+    { q: 'Which body regulates NPS?', options: ['SEBI','RBI','PFRDA','IRDAI'], answer: 2 },
+    { q: 'In which year was NPS opened to all Indian citizens?', options: ['2004','2006','2009','2012'], answer: 2 }
+  ]},
+  { id: 'quiz_002', lessonId: 'lesson_002', questions: [
+    { q: 'Which NPS account has a lock-in until retirement?', options: ['Tier II','Tier I','Both','Neither'], answer: 1 },
+    { q: 'Minimum annual contribution for Tier I is:', options: ['₹500','₹1,000','₹2,000','₹5,000'], answer: 1 },
+    { q: 'Which account allows free withdrawals at any time?', options: ['Tier I','Tier II','Both','Neither'], answer: 1 }
+  ]},
+  { id: 'quiz_003', lessonId: 'lesson_003', questions: [
+    { q: 'Exclusive additional NPS deduction under 80CCD(1B) is:', options: ['₹1,00,000','₹1,50,000','₹50,000','₹75,000'], answer: 2 },
+    { q: '% of corpus that can be withdrawn tax-free at retirement:', options: ['40%','60%','80%','100%'], answer: 1 },
+    { q: 'Employer NPS contribution is deductible under:', options: ['80C','80CCD(1)','80CCD(2)','80D'], answer: 2 }
+  ]},
+  { id: 'quiz_004', lessonId: 'lesson_004', questions: [
+    { q: 'PRAN stands for:', options: ['Permanent Retirement Account Number','Pension Recurrent Account Node','Primary Registration Application Number','None of these'], answer: 0 },
+    { q: 'Which asset class in NPS is equity-based?', options: ['Asset Class G','Asset Class C','Asset Class E','Asset Class F'], answer: 2 },
+    { q: 'Which of these is a Pension Fund Manager for NPS?', options: ['LIC','SBI Pension Funds','India Post','IRDA'], answer: 1 }
+  ]},
+  { id: 'quiz_005', lessonId: 'lesson_005', questions: [
+    { q: 'At normal exit, minimum % to go to annuity:', options: ['20%','40%','60%','80%'], answer: 1 },
+    { q: 'Premature exit is allowed after how many years?', options: ['1 year','2 years','3 years','5 years'], answer: 2 },
+    { q: 'Max partial withdrawals allowed over NPS tenure:', options: ['1','2','3','5'], answer: 2 }
+  ]}
+];
+
+// ── Seed ─────────────────────────────────────────────────────
+async function seed() {
+  try {
+    statusEl.innerHTML = '<span class="spinner"></span> Seeding 5 lessons…';
+    for (const lesson of LESSONS) {
+      const { id, ...data } = lesson;
+      await setDoc(doc(db, 'lessons', id), { ...data, createdAt: serverTimestamp() });
+    }
+
+    statusEl.innerHTML = '<span class="spinner"></span> Seeding 5 quizzes…';
+    for (const quiz of QUIZZES) {
+      const { id, ...data } = quiz;
+      await setDoc(doc(db, 'quizzes', id), { ...data, createdAt: serverTimestamp() });
+    }
+
+    statusEl.innerHTML = `<span class="ok">✓ Done! 5 lessons and 5 quizzes added to Firestore.</span>
+      <br><br><a href="lessons.html">→ Go to Lessons</a> &nbsp;|&nbsp; <a href="dashboard.html">→ Dashboard</a>`;
+  } catch (err) {
+    console.error(err);
+    statusEl.innerHTML = `<span class="err">✗ Error: ${err.message}</span>
+      <br><span style="font-size:0.8rem;color:#888">Check Firestore rules — ensure reads/writes are allowed (test mode). See browser console for details.</span>`;
+  }
+}
+
+seed();
+</script>
+</body>
+</html>
