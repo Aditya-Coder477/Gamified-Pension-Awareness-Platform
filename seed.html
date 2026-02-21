@@ -33,16 +33,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, doc, setDoc, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-// ── Firebase config (same as js/firebase.js) ─────────────────
-const firebaseConfig = {
-  apiKey: "AIzaSyBpFnDDkVEkH4XFEO-QXn0LM3EIJ7a8Gec",
-  authDomain: "pensionapp-77a49.firebaseapp.com",
-  projectId: "pensionapp-77a49",
-  storageBucket: "pensionapp-77a49.firebasestorage.app",
-  messagingSenderId: "966793247403",
-  appId: "1:966793247403:web:6706282aa6a65cbc0d0c5d"
-};
+import { firebaseConfig } from "./js/firebaseConfig.js";
 
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
